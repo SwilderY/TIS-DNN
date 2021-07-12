@@ -1,6 +1,6 @@
 # Empirical Studies on Test Input Selection Methods for Deep Neural Network Testing
 
-This is the implementation repository of our incoming APSEC 2021 paper: **Empirical Studies on Test Input Selection Methodsfor Deep Neural Network Testing**
+This is the implementation repository of our incoming APSEC 2021 paper: **Empirical Studies on Test Input Selection Methods for Deep Neural Network Testing**
 
 ## Description
 
@@ -56,6 +56,89 @@ We have release out results for the experiments in this paper, which have been p
   <center class = "half"><img src="RQ1/MNIST-LeNet-1/MNIST-LeNet-1_CES.png" width="300" height="200" alt="MNIST-LeNet-1_SRS" align=center /><img src="RQ1/MNIST-LeNet-1/MNIST-LeNet-1_CES.png" width="300" height="200" alt="MNIST-LeNet-1_CSS" align=center /><img src="RQ1/MNIST-LeNet-1/MNIST-LeNet-1_CES.png" width="300" height="200" alt="MNIST-LeNet-1_CES" align=center /><img src="RQ1/MNIST-LeNet-1/MNIST-LeNet-1_CES.png" width="300" height="200" alt="MNIST-LeNet-1_DeepReduce" align=center /><img src="RQ1/MNIST-LeNet-1/MNIST-LeNet-1_CES.png" width="300" height="200" alt="MNIST-LeNet-1_PACE" align=center /></center>
 
 * **RQ2**
+
+  In RQ2, we aim to investigate whether accurate performance estimation on each class can help to improve the test adequacy of the subset based on DNN-based coverage criteria.
+  
+  To investigate RQ2, we first aim to construct subsets, which can cover different classes. For each model, we will generate five different test subsets from the original set with different random seeds when given the fixed number of the covered classes. For each generated subset, we will run TIS-DNN methods to compute the accuracy estimation error $AccEE_{each}$ for each class.
+  
+  Then we consider the five popular deep neuron network-based coverage criteria (i.e., NC, NBC, SNAC, TKNC, and KMNC). 
+  
+  Finally, we will compute the correlation coefficient between the accuracy estimation error for each class $AccEE_{each}$ and the coverage difference $CovDiff$ when given a DNN-based coverage criterion.
+  
+  In our study, we utilize the Pearson correlation coefficient  and the Pearson correlation coefficient can be computed as follows:
+  
+  $$r(X,Y)=\frac{Cov(X,Y)}{\sqrt{Var[X]\cdot Var[Y]}}$$
+  
+  where $X$ and $Y$ are one-dimensional vectors, $Cov(X, Y)$ means the covariance of $X$ and $Y$, and $Var[Y]$ denotes the variance of the vector $Y$.
+  
+  The final results are shown in the following table:
+  
+  | ID   | NC    | NBC    | SNAC   | TKNC   | KMNC   |
+  | ---- | ----- | ------ | ------ | ------ | ------ |
+  | 1    | 0.965 | N/A    | 0.838  | 0.745  | 0.77   |
+  | 2    | 0.867 | -0.054 | 0.807  | 0.732  | -0.258 |
+  | 3    | 0.935 | -0.202 | 0.876  | 0.865  | 0.032  |
+  | 4    | 0.845 | 0.411  | 0.838  | 0.786  | 0.005  |
+  | 5    | 0.919 | 0.05   | 0.906  | 0.947  | -0.147 |
+  | 6    | 0.922 | 0.032  | 0.925  | 0.949  | -0.347 |
+  | 7    | 0.99  | 0.765  | 0.778  | 0.904  | 0.237  |
+  | 8    | 0.754 | -0.412 | -0.093 | 0.917  | 0.883  |
+  | 9    | 0.961 | -0.043 | 0.378  | 0.885  | 0.049  |
+  | 10   | 0.945 | 0.929  | 0.934  | 0.969  | 0.542  |
+  | 11   | 0.932 | 0.759  | 0.762  | 0.909  | 0.588  |
+  | 12   | 0.535 | -0.669 | -0.489 | -0.852 | 0.099  |
+  | 13   | 0.574 | 0.478  | 0.024  | 0.883  | 0.372  |
+  | 14   | 0.861 | 0.345  | 0.313  | 0.828  | -0.901 |
+  | 15   | 0.941 | -0.393 | 0.894  | 0.983  | 0.753  |
+  | 16   | 0.956 | 0.949  | 0.956  | 0.948  | 0.757  |
+
+* **RQ3**
+
+  After comparing the optimal subsets, we can compute the performance improvement room of the current TIS-DNN methods in this RQ.
+
+  In this RQ, we design a simple method Best.
+  Specifically, given the size of the subset, this method first determines the sampling number $sampNum[i]$ for $i$-th class according to the proportion of each class in the original test inputs.
+
+  Then for the $i$-th class, it computes the sampling number  of test inputs $sampNum_{c}[i]$ which are predicted correctly and the sampling number of test inputs $sampNum_{w}[i]$ which are predicted wrongly based on the accuracy of the $i$-th class of the original test inputs.
+
+  Later, for the $i$-th class, it samples $sampNum_{c}[i]$ test inputs with the correct predictions, and  $sampNum_{w}[i]$ test inputs with the wrong predictions from the original inputs in the $i$-th class.
+
+  Finally, after iterating all the classes, it can determine the optimal subset.
+
+  In this RQ, we first show the performance improvement room  after comparing the method Best and the method PACE. Final results (i.e., average value and standard deviation) can be found in the following table:
+
+  |  ID  | Room for $AccEE_{all}$ | Room for $AccEE_{each}$ |
+  | :--: | :--------------------: | :---------------------: |
+  |  1   |         2.12%          |          3.73%          |
+  |  2   |         0.87%          |          1.19%          |
+  |  3   |         0.10%          |          1.22%          |
+  |  4   |         1.14%          |          1.81%          |
+  |  5   |         3.12%          |          2.15%          |
+  |  6   |         0.13%          |          1.52%          |
+  |  7   |         2.78%          |          9.63%          |
+  |  8   |         1.12%          |          7.94%          |
+  |  9   |         1.35%          |         10.96%          |
+  |  10  |         4.00%          |          7.23%          |
+  |  11  |         0.51%          |          3.49%          |
+  |  12  |         0.28%          |          3.54%          |
+  |  13  |         0.48%          |          9.71%          |
+  |  14  |         0.00%          |          0.00%          |
+  |  15  |         3.19%          |         12.83%          |
+  |  16  |         7.67%          |         10.97%          |
+  |  17  |         1.00%          |         11.42%          |
+  |  18  |         1.66%          |          7.21%          |
+
+  Then we analyze the effect of the class number on the performance improvement room.
+  We compute the average value and the standard deviation grouped by the class number and the results can be found in the following table. 
+
+  In this table, we can find with the increase of the class number, the performance improvement room for $AccEE_{all}$ increases, while the performance improvement room for $AccEE_{each}$ decreases.
+
+  | \# class | Room for $AccEE_{all}$ | Room for $AccEE_{each}$ |
+  | :------: | :--------------------: | :---------------------: |
+  |    10    |         2.08%          |          5.89%          |
+  |    30    |         0.51%          |          3.49%          |
+  |   100    |         1.35%          |         10.96%          |
+  |   1000   |         4.79%          |          9.71%          |
 
   
 
