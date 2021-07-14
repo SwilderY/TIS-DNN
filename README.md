@@ -51,28 +51,26 @@ We have release out results for the experiments in this paper, which have been p
 
   In this directory, we presents the results for the previous mentioned experiment, and draw figures for precisely presentation. The results for 18 models are put in the 18 folders separately. We will show some figures for detailed explanation. As we can see from the figure, each of the figures contains two curves, in which the blue curve means the total accuracy estimation error of the model, while the orange curve denotes the average accuracy estimation error of each single class.
 
-  
-
   <center class = "half"><img src="RQ1/MNIST-LeNet-1/MNIST-LeNet-1_CES.png" width="300" height="200" alt="MNIST-LeNet-1_SRS" align=center /><img src="RQ1/MNIST-LeNet-1/MNIST-LeNet-1_CES.png" width="300" height="200" alt="MNIST-LeNet-1_CSS" align=center /><img src="RQ1/MNIST-LeNet-1/MNIST-LeNet-1_CES.png" width="300" height="200" alt="MNIST-LeNet-1_CES" align=center /><img src="RQ1/MNIST-LeNet-1/MNIST-LeNet-1_CES.png" width="300" height="200" alt="MNIST-LeNet-1_DeepReduce" align=center /><img src="RQ1/MNIST-LeNet-1/MNIST-LeNet-1_CES.png" width="300" height="200" alt="MNIST-LeNet-1_PACE" align=center /></center>
 
 * **RQ2**
 
   In RQ2, we aim to investigate whether accurate performance estimation on each class can help to improve the test adequacy of the subset based on DNN-based coverage criteria.
-  
+
   To investigate RQ2, we first aim to construct subsets, which can cover different classes. For each model, we will generate five different test subsets from the original set with different random seeds when given the fixed number of the covered classes. For each generated subset, we will run TIS-DNN methods to compute the accuracy estimation error $AccEE_{each}$ for each class.
-  
+
   Then we consider the five popular deep neuron network-based coverage criteria (i.e., NC, NBC, SNAC, TKNC, and KMNC). 
-  
+
   Finally, we will compute the correlation coefficient between the accuracy estimation error for each class $AccEE_{each}$ and the coverage difference $CovDiff$ when given a DNN-based coverage criterion.
-  
+
   In our study, we utilize the Pearson correlation coefficient  and the Pearson correlation coefficient can be computed as follows:
-  
+
   $$r(X,Y)=\frac{Cov(X,Y)}{\sqrt{Var[X]\cdot Var[Y]}}$$
-  
+
   where $X$ and $Y$ are one-dimensional vectors, $Cov(X, Y)$ means the covariance of $X$ and $Y$, and $Var[Y]$ denotes the variance of the vector $Y$.
-  
+
   The final results are shown in the following table:
-  
+
   | ID   | NC    | NBC    | SNAC   | TKNC   | KMNC   |
   | ---- | ----- | ------ | ------ | ------ | ------ |
   | 1    | 0.965 | N/A    | 0.838  | 0.745  | 0.77   |
@@ -91,6 +89,7 @@ We have release out results for the experiments in this paper, which have been p
   | 14   | 0.861 | 0.345  | 0.313  | 0.828  | -0.901 |
   | 15   | 0.941 | -0.393 | 0.894  | 0.983  | 0.753  |
   | 16   | 0.956 | 0.949  | 0.956  | 0.948  | 0.757  |
+  | Sum  | 13/16 | 2/16   | 9/16   | 13/16  | 2/16   |
 
 * **RQ3**
 
@@ -139,5 +138,4 @@ We have release out results for the experiments in this paper, which have been p
   |    30    |    (2.092%,4.018%)     |    (5.200%,11.802%)     |
   |   100    |    (1.353%,1.831%)     |    (10.204%,4.726%)     |
   |   1000   |    (1.105%,2.879%)     |     (9.391%,4.906%)     |
-
 
