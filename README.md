@@ -1,6 +1,6 @@
-# Empirical Studies on Test Input Selection Methods for Deep Neural Network Testing
+# Can Test Input Selection Methods for Deep Neural Network Guarantee Test Diversity? A Large-scale Empirical Study
 
-This is the implementation repository of our incoming APSEC 2021 paper: **Empirical Studies on Test Input Selection Methods for Deep Neural Network Testing**
+This is the implementation repository of our incoming IST 2021 paper: **Can Test Input Selection Methods for Deep Neural Network Guarantee Test Diversity? A Large-scale Empirical Study**
 
 ## Description
 
